@@ -1,5 +1,6 @@
 """
-Application configuration management
+Application configuration template for CIIMS
+Copy this file to config.py and fill in your actual values
 """
 
 import os
@@ -18,7 +19,7 @@ class Config:
     # Database configuration
     DB_HOST = os.getenv("DB_HOST", "localhost")
     DB_USER = os.getenv("DB_USER", "root")
-    DB_PASSWORD = os.getenv("DB_PASSWORD", "")
+    DB_PASSWORD = os.getenv("DB_PASSWORD", "your_database_password")
     DB_DATABASE = os.getenv("DB_DATABASE", "campus_system")
     DB_CHARSET = os.getenv("DB_CHARSET", "utf8mb4")
 
@@ -26,7 +27,7 @@ class Config:
     DB_POOL_NAME = "ciims_pool"
     DB_POOL_SIZE = int(os.getenv("DB_POOL_SIZE", "5"))
 
-    # Face recognition configuration
+    # Face recognition configuration (optional)
     FACE_RECOGNITION_MODEL_PATH = os.getenv(
         "FACE_RECOGNITION_MODEL_PATH", "model/trainer.yml"
     )
@@ -50,22 +51,21 @@ class Config:
     LOG_BACKUP_COUNT = int(os.getenv("LOG_BACKUP_COUNT", "5"))
 
     # Application configuration
-    APP_NAME = "CIIMS"
-    APP_VERSION = "1.0.0"
-    DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+    APP_NAME = os.getenv("APP_NAME", "Campus Intelligent Inventory Management System")
+    APP_VERSION = os.getenv("APP_VERSION", "1.0.0")
 
-    # AI assistant configuration
+    # Security configuration
+    PASSWORD_HASH_ROUNDS = int(os.getenv("PASSWORD_HASH_ROUNDS", "12"))
+
+    # AI assistant configuration (optional - leave empty to disable)
     OPENROUTER_BASE_URL = os.getenv(
         "OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"
     )
-    OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+    OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "your_api_key_here")
     OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "deepseek/deepseek-chat")
     OPENROUTER_REFERER = os.getenv("OPENROUTER_REFERER", "")
     OPENROUTER_TITLE = os.getenv("OPENROUTER_TITLE", "CIIMS In-App Assistant")
     PROXY_URL = os.getenv("CIIMS_PROXY_URL", "")
-
-    # Security configuration
-    PASSWORD_HASH_ROUNDS = int(os.getenv("PASSWORD_HASH_ROUNDS", "12"))
 
     @classmethod
     def get_db_config(cls):

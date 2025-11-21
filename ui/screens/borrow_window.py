@@ -5,7 +5,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QDate, QLocale
 from datetime import datetime, timedelta
 from database.db import get_connection
-from ui.base_window import AppleStyle, AppleMessageDialog
+from ui.base import AppleStyle, AppleMessageDialog
 
 
 class BorrowWindow(QMainWindow):

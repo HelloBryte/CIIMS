@@ -1,16 +1,23 @@
 from PySide6.QtWidgets import (
-    QWidget, QPushButton, QLabel, QVBoxLayout, QMainWindow
+    QWidget,
+    QPushButton,
+    QLabel,
+    QVBoxLayout,
+    QHBoxLayout,
+    QMainWindow,
 )
 from PySide6.QtCore import Qt
-from ui.BorrowWindow import BorrowWindow
-from ui.ReturnWindow import ReturnWindow
-from ui.BorrowingRecordsWindow import BorrowingRecordsWindow
-from ui.ProfileSettingsWindow import ProfileSettingsWindow
-from ui.AddItemWindow import AddItemWindow
-from ui.ManageItemsWindow import ManageItemsWindow
-from ui.UserManagementWindow import UserManagementWindow
-from ui.AllBorrowsWindow import AllBorrowsWindow
-from ui.base_window import AppleStyle
+
+from ui.base import AppleStyle
+from ui.dialogs import AIAssistantWindow
+from ui.screens.add_item_window import AddItemWindow
+from ui.screens.all_borrows_window import AllBorrowsWindow
+from ui.screens.borrow_window import BorrowWindow
+from ui.screens.borrowing_records_window import BorrowingRecordsWindow
+from ui.screens.manage_items_window import ManageItemsWindow
+from ui.screens.profile_settings_window import ProfileSettingsWindow
+from ui.screens.return_window import ReturnWindow
+from ui.screens.user_management_window import UserManagementWindow
 
 
 class MainWindow(QMainWindow):
@@ -18,6 +25,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.user_name = user_name
         self.user_role = user_role
+        self.assistant_window = None
         self.setWindowTitle(f"CIIMS - {user_name}")
         self.setFixedSize(600, 700)
         self.apply_apple_style()
@@ -134,6 +142,28 @@ class MainWindow(QMainWindow):
         layout.addWidget(card)
         layout.addStretch()
 
+        assistant_row = QHBoxLayout()
+        assistant_row.addStretch()
+        assistant_button = QPushButton("AI Assistant")
+        assistant_button.setFixedSize(140, 44)
+        assistant_button.clicked.connect(self.open_ai_assistant)
+        assistant_button.setStyleSheet(f"""
+            QPushButton {{
+                background-color: {AppleStyle.PRIMARY};
+                color: #FFFFFF;
+                border: none;
+                border-radius: {AppleStyle.RADIUS_MEDIUM}px;
+                font-family: {AppleStyle.FONT_FAMILY};
+                font-size: {AppleStyle.FONT_SIZE_REGULAR}px;
+                font-weight: 600;
+            }}
+            QPushButton:hover {{
+                background-color: {AppleStyle.PRIMARY_HOVER};
+            }}
+        """)
+        assistant_row.addWidget(assistant_button)
+        layout.addLayout(assistant_row)
+
     def create_menu_button(self, text, callback):
         """Create a menu button with Apple-style design"""
         button = QPushButton(text)
@@ -201,3 +231,29 @@ class MainWindow(QMainWindow):
         """Open all borrowing records window"""
         self.all_borrows_window = AllBorrowsWindow()
         self.all_borrows_window.show()
+
+    def open_ai_assistant(self):
+        """Open the CIIMS AI assistant dialog"""
+        if not hasattr(self, "assistant_window") or self.assistant_window is None:
+            self.assistant_window = AIAssistantWindow(
+                self,
+                user_name=self.user_name,
+                user_role=self.user_role,
+                context_provider=self._build_assistant_context,
+            )
+            self.assistant_window.destroyed.connect(self._reset_assistant_window)
+        self.assistant_window.show()
+        self.assistant_window.raise_()
+        self.assistant_window.activateWindow()
+
+    def _build_assistant_context(self) -> str:
+        """Provide runtime context for the assistant"""
+        return (
+            f"Active user: {self.user_name} "
+            f"(role: {self.user_role}). "
+            "The user is currently on the main dashboard."
+        )
+
+    def _reset_assistant_window(self):
+        """Clear assistant window reference once it is closed"""
+        self.assistant_window = None

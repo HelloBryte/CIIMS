@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from ui.LoginWindow import LoginWindow
+from ui.screens.login_window import LoginWindow
 from utils.logging_config import setup_logging
 from config import Config
 

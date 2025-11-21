@@ -4,12 +4,11 @@ from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout,
     QLabel, QLineEdit, QPushButton, QCheckBox
 )
-from ui.base_window import AppleMessageDialog
+from ui.base import AppleMessageDialog, AppleStyle
 from PySide6.QtGui import QFont
 from PySide6.QtCore import Qt
 from database.db import get_connection
 from face_recognition.face_register_utils import capture_for_register, train_one_user
-from ui.base_window import AppleStyle
 
 
 class RegisterWindow(QMainWindow):

@@ -5,7 +5,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 from database.db import get_connection
-from ui.base_window import AppleStyle, AppleMessageDialog, AppleConfirmDialog
+from ui.base import AppleStyle, AppleMessageDialog, AppleConfirmDialog
 
 
 class EditItemDialog(QDialog):

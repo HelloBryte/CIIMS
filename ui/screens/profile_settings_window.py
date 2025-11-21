@@ -13,7 +13,7 @@ from PySide6.QtCore import Qt
 import os
 from database.db import get_connection
 from face_recognition.face_register_utils import capture_for_register, train_one_user
-from ui.base_window import AppleStyle, AppleMessageDialog, AppleConfirmDialog
+from ui.base import AppleStyle, AppleMessageDialog, AppleConfirmDialog
 
 
 class ProfileSettingsWindow(QMainWindow):

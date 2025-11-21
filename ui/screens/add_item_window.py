@@ -3,8 +3,8 @@ from PySide6.QtWidgets import (
     QLabel, QPushButton, QLineEdit, QSpinBox, QTextEdit
 )
 from PySide6.QtCore import Qt
-from database.db import get_connection
-from ui.base_window import AppleStyle, AppleMessageDialog
+from utils.database_helper import execute_query
+from ui.base import AppleStyle, AppleMessageDialog
 
 
 class AddItemWindow(QMainWindow):
@@ -253,17 +253,10 @@ class AddItemWindow(QMainWindow):
             return
 
         try:
-            conn = get_connection()
-            cursor = conn.cursor()
-            
-            cursor.execute("""
+            execute_query("""
                 INSERT INTO items (item_name, item_category, item_quantity, remark)
                 VALUES (%s, %s, %s, %s)
             """, (name, category if category else None, quantity, remark if remark else None))
-            
-            conn.commit()
-            cursor.close()
-            conn.close()
             
             dialog = AppleMessageDialog(self, "Success", f"Item '{name}' added successfully!", "info")
             dialog.exec()

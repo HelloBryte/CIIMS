@@ -14,7 +14,7 @@ from PySide6.QtGui import QColor, QFont
 from PySide6.QtCore import Qt
 from datetime import datetime
 from database.db import get_connection
-from ui.base_window import AppleStyle, AppleMessageDialog
+from ui.base import AppleStyle, AppleMessageDialog
 
 
 class BorrowingRecordsWindow(QMainWindow):
