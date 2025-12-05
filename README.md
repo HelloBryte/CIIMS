@@ -80,8 +80,6 @@ DB_USER=root
 DB_PASSWORD=your_password
 DB_DATABASE=campus_system
 
-# AI Assistant (optional)
-OPENROUTER_API_KEY=your_api_key
 # Face recognition configuration
 FACE_RECOGNITION_MODEL_PATH=model/trainer.yml
 FACE_RECOGNITION_CASCADE_PATH=haarcascade_frontalface_default.xml
@@ -95,7 +93,7 @@ OPENROUTER_MODEL=deepseek/deepseek-chat
 PROXY_URL=http://127.0.0.1:7897
 ```
 
-## Project Structure
+### Project Structure
 
 ```
 ciims/
@@ -112,38 +110,91 @@ ciims/
 └── main.py              # Application entry point
 ```
 
-## Usage
-
-1. **Login**: Use password or face recognition to authenticate
-2. **Dashboard**: Access main features based on user role (admin/user)
-3. **Item Management**: Add, edit, or remove inventory items
-4. **Borrowing**: Borrow and return items with automatic tracking
-5. **User Management**: (Admin only) Manage user accounts and permissions
-6. **AI Assistant**: Click the AI button for contextual help
-
-## Face Recognition Setup (Optional)
-
-1. Ensure camera permissions are granted
-2. Register face data through the registration window
-3. The system will automatically train the recognition model
-4. Face recognition will be available at login
-
-## AI Assistant
-
-The built-in AI assistant provides:
-- Context-aware help for CIIMS features
-- SQL query suggestions for data analysis
-- Natural language interface for database operations
-- Multilingual support (English/Chinese)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## License
+### License
 
 This project is licensed under the MIT License.
+
+---
+
+## 中文
+
+CIIMS 是一个校园物资智能管理系统桌面应用，可选内置 AI 助手。使用 PySide6 和 MySQL 构建，提供现代化界面用于管理物资、借还操作和用户账户。
+
+### 功能特点
+
+- 🔐 **安全认证**：密码登录，可选人脸识别
+- 📦 **物资管理**：添加、编辑、追踪物资，库存监控
+- 🔄 **借还操作**：完整的借还流程，逾期追踪
+- 👥 **用户管理**：管理员控制用户账户和权限
+- 🤖 **AI 助手**：可选的多语言支持（中英文），智能查询
+- 🎨 **现代界面**：苹果风格的界面设计
+
+### AI 助手功能（可选）
+
+- **意图分类**：自动路由查询到通用问答或数据库操作
+- **模糊搜索**：自然语言查询的语义匹配
+- **多语言支持**：根据用户输入语言回复
+- **SQL 生成**：安全、经过验证的数据库查询生成，带 RBAC 权限控制
+
+### 技术栈
+
+- **前端**：PySide6（Qt6 Python 绑定）
+- **后端**：Python 3.9+
+- **数据库**：MySQL 8.0
+- **人脸识别**：OpenCV LBPH 算法（可选）
+- **AI 集成**：OpenRouter 兼容 API（可选）
+
+### 安装步骤
+
+1. 克隆仓库
+```bash
+git clone https://github.com/your-username/ciims.git
+cd ciims
+```
+
+2. 创建虚拟环境
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+```
+
+3. 安装依赖
+```bash
+pip install -r requirements.txt
+```
+
+4. 配置
+```bash
+cp config.example.py config.py
+# 编辑 config.py 填入数据库和 API 设置
+```
+
+5. 数据库设置
+```bash
+# 创建名为 'campus_system' 的 MySQL 数据库
+python database/init_db.py
+python scripts/generate_sample_items.py
+```
+**注意**：数据库初始化会创建默认管理员账户：
+- 用户名：`admin`
+- 密码：`admin123`
+
+首次登录后请更改密码以确保安全。
+
+6. 运行应用
+```bash
+python main.py
+```
+
+### 使用说明
+
+1. **登录**：使用密码或人脸识别进行认证
+2. **仪表盘**：根据用户角色（管理员/用户）访问主要功能
+3. **物资管理**：添加、编辑或删除库存物资
+4. **借还**：借用和归还物资，自动追踪
+5. **用户管理**：（仅管理员）管理用户账户和权限
+6. **AI 助手**：点击 AI 按钮获取上下文帮助
+
+### 许可证
+
+本项目采用 MIT 许可证。
