@@ -1,6 +1,11 @@
 """
-Application configuration template for CIIMS
-Copy this file to config.py and fill in your actual values
+Application configuration reference for CIIMS.
+
+config.py (tracked in this repository) already ships with safe,
+environment-driven defaults, so you normally do NOT need to copy this
+file over it. Use this file as documentation of every supported setting;
+override any value via environment variables or a local .env file
+(see the README's Configuration section).
 """
 
 import os
@@ -53,9 +58,7 @@ class Config:
     # Application configuration
     APP_NAME = os.getenv("APP_NAME", "Campus Intelligent Inventory Management System")
     APP_VERSION = os.getenv("APP_VERSION", "1.0.0")
-
-    # Security configuration
-    PASSWORD_HASH_ROUNDS = int(os.getenv("PASSWORD_HASH_ROUNDS", "12"))
+    DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
     # AI assistant configuration (optional - leave empty to disable)
     OPENROUTER_BASE_URL = os.getenv(
@@ -66,6 +69,9 @@ class Config:
     OPENROUTER_REFERER = os.getenv("OPENROUTER_REFERER", "")
     OPENROUTER_TITLE = os.getenv("OPENROUTER_TITLE", "CIIMS In-App Assistant")
     PROXY_URL = os.getenv("CIIMS_PROXY_URL", "")
+
+    # Security configuration
+    PASSWORD_HASH_ROUNDS = int(os.getenv("PASSWORD_HASH_ROUNDS", "12"))
 
     @classmethod
     def get_db_config(cls):
