@@ -49,8 +49,9 @@ pip install -r requirements.txt
 
 4. Configuration
 ```bash
-cp config.example.py config.py
-# Edit config.py with your database and API settings
+# config.py already ships with safe, environment-driven defaults.
+# Optionally create a .env file (see below) to override database and
+# API settings without editing config.py directly.
 ```
 
 5. Database setup
@@ -72,7 +73,10 @@ python main.py
 
 ### Configuration
 
-Edit `.env` file with your settings:
+`config.py` already reads every setting from an environment variable with a
+sensible default, so the app runs out of the box. To override any value,
+create a `.env` file in the project root (see `config.example.py` for the
+full list of supported variables):
 ```env
 # Database
 DB_HOST=localhost
@@ -80,18 +84,22 @@ DB_USER=root
 DB_PASSWORD=your_password
 DB_DATABASE=campus_system
 
-# Face recognition configuration
+# Face recognition configuration (optional - module not bundled, see note below)
 FACE_RECOGNITION_MODEL_PATH=model/trainer.yml
-FACE_RECOGNITION_CASCADE_PATH=haarcascade_frontalface_default.xml
+FACE_RECOGNITION_HAAR_CASCADE_PATH=haarcascade_frontalface_default.xml
 FACE_RECOGNITION_CONFIDENCE_THRESHOLD=50
 FACE_RECOGNITION_PREDICTION_THRESHOLD=70
-ENABLE_FACE_RECOGNITION=True
 
 # AI Assistant configuration (optional)
 OPENROUTER_API_KEY=your_api_key_here
 OPENROUTER_MODEL=deepseek/deepseek-chat
-PROXY_URL=http://127.0.0.1:7897
+CIIMS_PROXY_URL=http://127.0.0.1:7897
 ```
+
+**Note**: The face recognition capture/training module (`face_recognition/`)
+is not bundled in this repository. The login, registration, and profile
+screens detect its absence automatically and disable the face-recognition
+UI elements; password-based authentication always works normally.
 
 ### Project Structure
 
@@ -103,12 +111,16 @@ ciims/
 │   └── base/             # Base UI components and styles
 ├── utils/                 # Utility modules
 ├── database/             # Database configuration and helpers
-├── face_recognition/     # Face recognition modules
-├── scripts/              # Utility scripts
-├── model/                # Face recognition model files
-├── dataset/              # Face recognition training data
-└── main.py              # Application entry point
+├── scripts/              # Utility scripts (sample data generation, etc.)
+├── config.py             # Runtime configuration (env-driven, no secrets)
+├── config.example.py     # Reference/documentation for all config options
+└── main.py               # Application entry point
 ```
+
+**Note**: `face_recognition/`, `model/`, and `dataset/` are optional
+directories for the (not bundled) face recognition module; they are not
+part of the tracked repository structure. See the Configuration section
+above.
 
 ### License
 
@@ -165,8 +177,9 @@ pip install -r requirements.txt
 
 4. 配置
 ```bash
-cp config.example.py config.py
-# 编辑 config.py 填入数据库和 API 设置
+# config.py 已内置基于环境变量的安全默认值，开箱即用。
+# 如需覆盖数据库或 API 设置，可创建 .env 文件（变量说明参见英文部分的
+# Configuration 小节，或直接查看 config.example.py）。
 ```
 
 5. 数据库设置

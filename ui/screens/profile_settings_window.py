@@ -12,8 +12,20 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt
 import os
 from database.db import get_connection
-from face_recognition.face_register_utils import capture_for_register, train_one_user
 from ui.base import AppleStyle, AppleMessageDialog, AppleConfirmDialog
+
+try:
+    # The face_recognition package is an optional, separately-installed
+    # module (not bundled with this repository). Guard the import so the
+    # rest of the app still works when it is absent.
+    from face_recognition.face_register_utils import (
+        capture_for_register,
+        train_one_user,
+    )
+
+    FACE_RECOGNITION_AVAILABLE = True
+except ImportError:
+    FACE_RECOGNITION_AVAILABLE = False
 
 
 class ProfileSettingsWindow(QMainWindow):
@@ -123,6 +135,11 @@ class ProfileSettingsWindow(QMainWindow):
         self.btn_update_face = QPushButton("Update Face Recognition")
         self.btn_update_face.setMinimumHeight(40)
         self.btn_update_face.clicked.connect(self.update_face_recognition)
+        self.btn_update_face.setEnabled(FACE_RECOGNITION_AVAILABLE)
+        if not FACE_RECOGNITION_AVAILABLE:
+            self.btn_update_face.setToolTip(
+                "Face recognition module is not installed on this system."
+            )
         face_layout.addWidget(self.btn_update_face)
 
         face_group.setLayout(face_layout)
@@ -339,6 +356,16 @@ class ProfileSettingsWindow(QMainWindow):
 
     def update_face_recognition(self):
         """Update face recognition data"""
+        if not FACE_RECOGNITION_AVAILABLE:
+            dialog = AppleMessageDialog(
+                self,
+                "Unavailable",
+                "Face recognition module is not installed on this system.",
+                "warning",
+            )
+            dialog.exec()
+            return
+
         if not self.user_id:
             dialog = AppleMessageDialog(
                 self, "Error", "User information not loaded", "warning"

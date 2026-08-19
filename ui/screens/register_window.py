@@ -8,7 +8,19 @@ from ui.base import AppleMessageDialog, AppleStyle
 from PySide6.QtGui import QFont
 from PySide6.QtCore import Qt
 from database.db import get_connection
-from face_recognition.face_register_utils import capture_for_register, train_one_user
+
+try:
+    # The face_recognition package is an optional, separately-installed
+    # module (not bundled with this repository). Guard the import so the
+    # rest of the app still works when it is absent.
+    from face_recognition.face_register_utils import (
+        capture_for_register,
+        train_one_user,
+    )
+
+    FACE_RECOGNITION_AVAILABLE = True
+except ImportError:
+    FACE_RECOGNITION_AVAILABLE = False
 
 
 class RegisterWindow(QMainWindow):
@@ -89,8 +101,12 @@ class RegisterWindow(QMainWindow):
         card_layout.addWidget(self.phone_input)
 
         # Face registration checkbox
-        self.face_checkbox = QCheckBox("Register face recognition (optional)")
+        checkbox_label = "Register face recognition (optional)"
+        if not FACE_RECOGNITION_AVAILABLE:
+            checkbox_label += " - unavailable"
+        self.face_checkbox = QCheckBox(checkbox_label)
         self.face_checkbox.setChecked(False)
+        self.face_checkbox.setEnabled(FACE_RECOGNITION_AVAILABLE)
         self.face_checkbox.setStyleSheet(f"""
             QCheckBox {{
                 color: {AppleStyle.TEXT_PRIMARY};
@@ -189,7 +205,7 @@ class RegisterWindow(QMainWindow):
         name = self.name_input.text().strip()
         pwd = self.pwd_input.text().strip()
         phone = self.phone_input.text().strip()
-        register_face = self.face_checkbox.isChecked()
+        register_face = self.face_checkbox.isChecked() and FACE_RECOGNITION_AVAILABLE
 
         # Validation
         if not name or not pwd or not phone:

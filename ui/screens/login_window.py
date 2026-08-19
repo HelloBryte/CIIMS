@@ -23,6 +23,7 @@ class LoginWindow(BaseWindow):
     def __init__(self):
         super().__init__()
         self.main_window = None  # Initialize attribute in __init__
+        self.register_window = None  # Initialize attribute in __init__
         self.initUI()
         self.setup_connections()
 
@@ -264,5 +265,8 @@ class LoginWindow(BaseWindow):
 
     def open_register(self):
         """Open registration window"""
-        register_window = RegisterWindow()
-        register_window.exec()
+        # RegisterWindow is a QMainWindow, not a QDialog, so it must be
+        # shown (not exec()'d) and kept alive via an attribute reference
+        # to avoid being garbage-collected immediately.
+        self.register_window = RegisterWindow()
+        self.register_window.show()
