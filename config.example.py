@@ -56,7 +56,7 @@ class Config:
     LOG_BACKUP_COUNT = int(os.getenv("LOG_BACKUP_COUNT", "5"))
 
     # Application configuration
-    APP_NAME = os.getenv("APP_NAME", "Campus Intelligent Inventory Management System")
+    APP_NAME = os.getenv("APP_NAME", "CIIMS")
     APP_VERSION = os.getenv("APP_VERSION", "1.0.0")
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
