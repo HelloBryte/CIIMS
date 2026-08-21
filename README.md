@@ -6,7 +6,7 @@ CIIMS is a desktop application for campus inventory management with an optional 
 
 ### Features
 
-- 🔐 **Secure Authentication**: Password-based login with optional face recognition
+- 🔐 **Secure Authentication**: Password-based login, with optional face-recognition enrollment during registration/profile updates
 - 📦 **Inventory Management**: Add, edit, and track items with stock monitoring
 - 🔄 **Borrow/Return Operations**: Complete borrowing lifecycle with overdue tracking
 - 👥 **User Management**: Admin controls for user accounts and permissions
@@ -32,8 +32,8 @@ CIIMS is a desktop application for campus inventory management with an optional 
 
 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/ciims.git
-cd ciims
+git clone https://github.com/HelloBryte/CIIMS.git
+cd CIIMS
 ```
 
 2. Create virtual environment
@@ -75,31 +75,17 @@ python main.py
 
 `config.py` already reads every setting from an environment variable with a
 sensible default, so the app runs out of the box. To override any value,
-create a `.env` file in the project root (see `config.example.py` for the
-full list of supported variables):
-```env
-# Database
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_DATABASE=campus_system
-
-# Face recognition configuration (optional - module not bundled, see note below)
-FACE_RECOGNITION_MODEL_PATH=model/trainer.yml
-FACE_RECOGNITION_HAAR_CASCADE_PATH=haarcascade_frontalface_default.xml
-FACE_RECOGNITION_CONFIDENCE_THRESHOLD=50
-FACE_RECOGNITION_PREDICTION_THRESHOLD=70
-
-# AI Assistant configuration (optional)
-OPENROUTER_API_KEY=your_api_key_here
-OPENROUTER_MODEL=deepseek/deepseek-chat
-CIIMS_PROXY_URL=http://127.0.0.1:7897
+copy `.env.example` to `.env` and edit what you need (see `config.example.py`
+for the full list of supported variables):
+```bash
+cp .env.example .env
 ```
 
 **Note**: The face recognition capture/training module (`face_recognition/`)
-is not bundled in this repository. The login, registration, and profile
-screens detect its absence automatically and disable the face-recognition
-UI elements; password-based authentication always works normally.
+is not bundled in this repository. The registration and profile screens
+detect its absence automatically and disable the face-recognition UI
+elements. Face recognition is only used to enroll/update a face for an
+account; login itself is always password-based.
 
 ### Project Structure
 
@@ -134,7 +120,7 @@ CIIMS 是一个校园物资智能管理系统桌面应用，可选内置 AI 助�
 
 ### 功能特点
 
-- 🔐 **安全认证**：密码登录，可选人脸识别
+- 🔐 **安全认证**：密码登录，注册/更新资料时可选录入人脸识别
 - 📦 **物资管理**：添加、编辑、追踪物资，库存监控
 - 🔄 **借还操作**：完整的借还流程，逾期追踪
 - 👥 **用户管理**：管理员控制用户账户和权限
@@ -160,8 +146,8 @@ CIIMS 是一个校园物资智能管理系统桌面应用，可选内置 AI 助�
 
 1. 克隆仓库
 ```bash
-git clone https://github.com/your-username/ciims.git
-cd ciims
+git clone https://github.com/HelloBryte/CIIMS.git
+cd CIIMS
 ```
 
 2. 创建虚拟环境
@@ -201,7 +187,7 @@ python main.py
 
 ### 使用说明
 
-1. **登录**：使用密码或人脸识别进行认证
+1. **登录**：使用用户名和密码进行认证
 2. **仪表盘**：根据用户角色（管理员/用户）访问主要功能
 3. **物资管理**：添加、编辑或删除库存物资
 4. **借还**：借用和归还物资，自动追踪
