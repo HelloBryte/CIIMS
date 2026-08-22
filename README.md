@@ -75,8 +75,8 @@ python main.py
 
 `config.py` already reads every setting from an environment variable with a
 sensible default, so the app runs out of the box. To override any value,
-create a `.env` file in the project root (see `config.example.py` for the
-full list of supported variables):
+copy `.env.example` to `.env` and adjust as needed (see `config.example.py`
+for the full documented default of every supported variable):
 ```env
 # Database
 DB_HOST=localhost
@@ -114,6 +114,7 @@ ciims/
 ├── scripts/              # Utility scripts (sample data generation, etc.)
 ├── config.py             # Runtime configuration (env-driven, no secrets)
 ├── config.example.py     # Reference/documentation for all config options
+├── .env.example          # Template for local .env overrides
 └── main.py               # Application entry point
 ```
 
@@ -124,7 +125,7 @@ above.
 
 ### License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
@@ -210,4 +211,4 @@ python main.py
 
 ### 许可证
 
-本项目采用 MIT 许可证。
+本项目采用 [MIT 许可证](LICENSE)。
