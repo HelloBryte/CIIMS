@@ -50,8 +50,9 @@ pip install -r requirements.txt
 4. Configuration
 ```bash
 # config.py already ships with safe, environment-driven defaults.
-# Optionally create a .env file (see below) to override database and
+# Optionally copy .env.example to .env to override database and
 # API settings without editing config.py directly.
+cp .env.example .env
 ```
 
 5. Database setup
@@ -114,6 +115,7 @@ ciims/
 ├── scripts/              # Utility scripts (sample data generation, etc.)
 ├── config.py             # Runtime configuration (env-driven, no secrets)
 ├── config.example.py     # Reference/documentation for all config options
+├── .env.example          # Copy to .env to override config.py defaults
 └── main.py               # Application entry point
 ```
 
@@ -124,7 +126,7 @@ above.
 
 ### License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
@@ -178,8 +180,9 @@ pip install -r requirements.txt
 4. 配置
 ```bash
 # config.py 已内置基于环境变量的安全默认值，开箱即用。
-# 如需覆盖数据库或 API 设置，可创建 .env 文件（变量说明参见英文部分的
-# Configuration 小节，或直接查看 config.example.py）。
+# 如需覆盖数据库或 API 设置，可复制 .env.example 为 .env（变量说明参见
+# 英文部分的 Configuration 小节，或直接查看 config.example.py）。
+cp .env.example .env
 ```
 
 5. 数据库设置
