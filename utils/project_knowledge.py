@@ -35,7 +35,7 @@ Key application modules:
    - utils/assistant_data.py (SQL generation, validation, and fuzzy search)
    - ui/dialogs/ai_assistant_window.py (AI assistant UI interface)
 6. Utility helpers:
-   - utils/security.py (password hashing and verification)
+   - utils/security.py (password verification; plain-text comparison in this experimental build)
    - utils/logging_config.py (rotating logs under logs/)
    - scripts/generate_sample_items.py (diverse sample data generation)
 
