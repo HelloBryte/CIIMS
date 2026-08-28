@@ -112,9 +112,20 @@ ciims/
 ├── utils/                 # Utility modules
 ├── database/             # Database configuration and helpers
 ├── scripts/              # Utility scripts (sample data generation, etc.)
+├── tests/                # Unit tests (pytest, no DB required)
 ├── config.py             # Runtime configuration (env-driven, no secrets)
 ├── config.example.py     # Reference/documentation for all config options
 └── main.py               # Application entry point
+```
+
+### Testing
+
+Unit tests cover the pure-logic modules (currently the AI assistant's SQL
+guardrails in `utils/assistant_data.py`) and don't require a MySQL
+connection. Install the dev extras and run:
+```bash
+pip install -r requirements-dev.txt
+pytest
 ```
 
 **Note**: `face_recognition/`, `model/`, and `dataset/` are optional
@@ -197,6 +208,15 @@ python scripts/generate_sample_items.py
 6. 运行应用
 ```bash
 python main.py
+```
+
+### 测试
+
+单元测试覆盖纯逻辑模块（目前为 AI 助手的 SQL 安全校验逻辑
+`utils/assistant_data.py`），无需连接 MySQL 即可运行：
+```bash
+pip install -r requirements-dev.txt
+pytest
 ```
 
 ### 使用说明
